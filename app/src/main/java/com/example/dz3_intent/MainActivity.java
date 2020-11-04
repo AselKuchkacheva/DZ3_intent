@@ -1,5 +1,6 @@
 package com.example.dz3_intent;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,12 +13,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import static com.example.dz3_intent.SecondActivity.IMAGE;
+import static com.example.dz3_intent.SecondActivity.TEXT;
+
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private TextView textView;
-    private Button button1;
-    private Button button2;
+    private Button button1, button2;
     public static final String KEY_INTENT = "key";
     public static final int REQUEST_CODE = 100;
     public String text1, image1;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        getInt2();
+     //   getInt2();
     }
 
 
@@ -59,16 +62,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getInt2() {
-        if (getIntent().getStringExtra("text") != null && getIntent().getStringExtra("pic") != null) {
-            Intent intent = getIntent();
-            text1 = intent.getStringExtra("text");
-            image1 = intent.getStringExtra("pic");
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            image1 = data.getStringExtra(IMAGE);
+            text1 = data.getStringExtra(TEXT);
             imageView.setImageURI(Uri.parse(image1));
             textView.setText(text1);
+            Log.d("ololo", image1);
         }
-        Log.d("ololo", "getInt2: " + text1 + image1);
     }
-
 }

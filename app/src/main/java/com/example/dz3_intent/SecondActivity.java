@@ -21,6 +21,9 @@ public class SecondActivity extends AppCompatActivity {
     public String image;
     public String text;
     public static final int GALLERY_REQUEST = 1;
+    public static final String TEXT = "text";
+    public static final String IMAGE = "pic";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class SecondActivity extends AppCompatActivity {
             text = intent.getStringExtra(MainActivity.KEY_INTENT);
             editText.setText(text);
         }
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,9 +76,10 @@ public class SecondActivity extends AppCompatActivity {
 
     private void sentPicText() {
         Intent intent2 = new Intent(this,MainActivity.class);
-        intent2.putExtra("text", text);
-        intent2.putExtra("pic", image);
-        this.startActivity(intent2);
+        intent2.putExtra(TEXT, text);
+        intent2.putExtra(IMAGE, image);
+        setResult(RESULT_OK,intent2);
+        finish();
         Log.d("ololo", "sentPicText: "+text+image);
 
     }
